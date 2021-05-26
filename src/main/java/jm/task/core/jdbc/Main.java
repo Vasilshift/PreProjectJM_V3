@@ -20,12 +20,36 @@ public class Main {
                 System.out.println("driver manager runned");
 
                 Statement statement = connection.createStatement();
-                statement.addBatch("CREATE TABLE `test`.`users` (`id` INT NOT NULL AUTO_INCREMENT, " +
-                        "`name` VARCHAR(45) NOT NULL," +
-                        "  `lastName` VARCHAR(45) NOT NULL," +
-                        "  `age` VARCHAR(45) NOT NULL," +
-                        "  PRIMARY KEY (`id`)," +
-                        "  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);");
+
+                statement.addBatch("DROP TABLE IF EXISTS `test`.`users`;");
+                statement.addBatch("CREATE TABLE `test`.`users` (`id` INT NOT NULL, " +
+                        " `name` VARCHAR(45) NOT NULL," +
+                        " `lastName` VARCHAR(45) NOT NULL," +
+                        " `age` INT(3) NOT NULL)" +
+                        //" PRIMARY KEY (`id`)," +
+                        //" UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)" +
+                        ";"
+                );
+                statement.addBatch(
+                        "insert into `test`.`users` (id, name, lastName, age) values (1, 'Misha', 'Vasilev', 34);"
+                );
+                System.out.printf("user с именем \s% добавлен в БД", );
+                statement.addBatch(
+                        "insert into `test`.`users` (id, name, lastName, age) values (1, 'Sasha', 'Romanov', 65);"
+                );
+                statement.addBatch(
+                        "insert into `test`.`users` (id, name, lastName, age) values (1, 'Alex', 'Porshnev', 18);"
+                );
+                statement.addBatch(
+                        "insert into `test`.`users` (id, name, lastName, age) values (1, 'Tim', 'Bird', 52);"
+                );
+
+                //statement.addBatch("DROP TABLE `test`.`users`;");
+
+
+
+
+
                 statement.executeBatch();
                 System.out.println("connection runned");
                 if(!connection.isClosed()) {
