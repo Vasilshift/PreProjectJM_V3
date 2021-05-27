@@ -16,7 +16,6 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() throws SQLException {
         //Connection connection = null;
-
         try {
             Util conn = new Util();
             conn.UtilConnect();
