@@ -21,7 +21,7 @@ public class UserDaoJDBCImpl implements UserDao {
         //Connection connection = null;
         try {
             statement = connection.createStatement();
-            statement.execute("CREATE TABLE test.users (\n" +
+            statement.addBatch("CREATE TABLE `test`.`users36` (\n" +
                     "  `id` BIGINT NOT NULL AUTO_INCREMENT,\n" +
                     "  `name` VARCHAR(45) NULL,\n" +
                     "  `lastName` VARCHAR(45) NULL,\n" +
@@ -33,40 +33,37 @@ public class UserDaoJDBCImpl implements UserDao {
     public void dropUsersTable() throws SQLException {
         try {
             statement = connection.createStatement();
-            statement.addBatch("DROP TABLE `test`.`users`;");
+            statement.addBatch("DROP TABLE `test`.`users36`;");
             statement.executeBatch();
         } catch (Exception e) {}
     }
 
     public void saveUser(String name, String lastName, byte age) throws SQLException {
 
-        try {
-            statement = connection.createStatement();
+
             //connection.prepareStatement()
             //statement.execute(insert into test.users (name, lastName, age) values (name, lastName, age));
 
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement("insert into user (name, lastName, age)" +
+                statement = connection.createStatement();
+                PreparedStatement preparedStatement = connection.prepareStatement("insert into `test`.`users36` (name, lastName, age)" +
                         " values (?,?,?);");
                 preparedStatement.setString(1, name);
                 preparedStatement.setString(2, lastName);
                 preparedStatement.setLong(3, age);
-                int rows = preparedStatement.executeUpdate();
-                System.out.printf("%d rows added", rows);
+                //int rows = preparedStatement.executeUpdate();
+                //System.out.printf("%d rows added", rows);
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
 
-            //statement.executeBatch();
-            //System.out.printf("user с именем %s добавлен в БД", "Misha");
-        } catch (SQLException e) {
-            throw new RuntimeException("Error executing sql:\n", e);
-        }
     }
 
-
-    public void removeUserById(long id) {
-
+    public void removeUserById(long id) throws SQLException {
+        statement = connection.createStatement();
+        PreparedStatement preparedStatement = connection.prepareStatement(
+                "DELETE FROM `test`.`users36` WHERE id = ?;");
+        preparedStatement.setLong(1, id);
     }
 
     public List<User> getAllUsers() {

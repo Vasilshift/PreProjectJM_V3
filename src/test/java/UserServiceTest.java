@@ -6,6 +6,7 @@ import org.junit.Test;
 import jm.task.core.jdbc.model.User;
 import java.util.List;
 import jm.task.core.jdbc.util.Util;
+
 public class UserServiceTest {
     private final UserService userService = new UserServiceImpl();
 
