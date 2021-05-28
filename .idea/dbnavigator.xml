@@ -26,14 +26,19 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="c647cfb6-33b1-4426-9c5e-2204ec3f419f">
-        <schema name="test" object-types="table, view, procedure, function, constraint, index, column, dataset trigger" />
+        <schema name="test" object-types="table, view, procedure, function, column" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="c647cfb6-33b1-4426-9c5e-2204ec3f419f">
-      <console name="Connection" type="STANDARD" schema="" session="Main"><![CDATA[select * from users;
-statement.execute("insert into `test`.`users` (id, name, lastName, age) values (5, 'ty', 'fg', 56);");]]></console>
+      <console name="Connection" type="STANDARD" schema="test" session="Main"><![CDATA[select * from users;
+show tables;
+statement.execute("insert into `test`.`users` (id, name, lastName, age) values (5, 'ty', 'fg', 56);");
+CREATE TABLE `test`.`users` (`id` INT NOT NULL, `name` VARCHAR(45) NOT NULL, `lastName` VARCHAR(45) NOT NULL, `age` TINYINT(3) NOT NULL);
+       PRIMARY KEY (`id`),
+       UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
+CREATE TABLE `test`.`table3` (`id` INT NOT NULL AUTO_INCREMENT,  `name` VARCHAR(45) NULL,  `lastName` VARCHAR(45) NULL,  `age` VARCHAR(45) NOT NULL,  PRIMARY KEY (`id`));]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

@@ -4,12 +4,15 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
+
     private Connection connection;
+    private Statement statement;
 
     public UserDaoJDBCImpl() {
     }
@@ -17,26 +20,19 @@ public class UserDaoJDBCImpl implements UserDao {
     public void createUsersTable() throws SQLException {
         //Connection connection = null;
         try {
-            Util conn = new Util();
-            conn.UtilConnect();
-            Statement statement = connection.createStatement();
-            statement.addBatch("DROP TABLE IF EXISTS `test`.`users`;");
-            statement.addBatch("CREATE TABLE `test`.`users` (`id` INT NOT NULL, " +
-                    " `name` VARCHAR(45) NOT NULL," +
-                    " `lastName` VARCHAR(45) NOT NULL," +
-                    " `age` INT(3) NOT NULL)" +
-                    //" PRIMARY KEY (`id`)," +
-                    //" UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)" +
-                    ";"
-            );
-            //statement.executeBatch();
+            statement = connection.createStatement();
+            statement.execute("CREATE TABLE test.users (\n" +
+                    "  `id` BIGINT NOT NULL AUTO_INCREMENT,\n" +
+                    "  `name` VARCHAR(45) NULL,\n" +
+                    "  `lastName` VARCHAR(45) NULL,\n" +
+                    "  `age` TINYINT NULL,\n" +
+                    "  PRIMARY KEY (`id`));");
+            statement.executeBatch();
         } catch (Exception e) {}
     }
     public void dropUsersTable() throws SQLException {
         try {
-//            Util conn = new Util();
-//            conn.UtilConnect();
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             statement.addBatch("DROP TABLE `test`.`users`;");
             statement.executeBatch();
         } catch (Exception e) {}
@@ -45,16 +41,24 @@ public class UserDaoJDBCImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) throws SQLException {
 
         try {
-            Util conn = new Util();
-            conn.UtilConnect();
-            Statement statement = connection.createStatement();
-            statement.execute("insert into `test`.`users` (id, name, lastName, age) values (5, 'ty', 'fg', 56);");
+            statement = connection.createStatement();
+            //connection.prepareStatement()
+            //statement.execute(insert into test.users (name, lastName, age) values (name, lastName, age));
 
-//            statement.addBatch(
-//                    "insert into `test`.`users` (id," + name + ", lastName, age) values (5, 'ty', 'fg', 56);"
-//            );
-//            statement.executeBatch();
-            System.out.printf("user с именем %s добавлен в БД", "Misha");
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement("insert into user (name, lastName, age)" +
+                        " values (?,?,?);");
+                preparedStatement.setString(1, name);
+                preparedStatement.setString(2, lastName);
+                preparedStatement.setLong(3, age);
+                int rows = preparedStatement.executeUpdate();
+                System.out.printf("%d rows added", rows);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+            //statement.executeBatch();
+            //System.out.printf("user с именем %s добавлен в БД", "Misha");
         } catch (SQLException e) {
             throw new RuntimeException("Error executing sql:\n", e);
         }
