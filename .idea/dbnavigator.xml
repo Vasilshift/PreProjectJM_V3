@@ -26,19 +26,33 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="c647cfb6-33b1-4426-9c5e-2204ec3f419f">
-        <schema name="test" object-types="table, view, column" />
+        <schema name="test" object-types="table, column" />
+        <schema name="testx" object-types="table, view, procedure, function, constraint, index, column, dataset trigger" />
       </connection>
     </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="c647cfb6-33b1-4426-9c5e-2204ec3f419f">
-      <console name="Connection" type="STANDARD" schema="test" session="Main"><![CDATA[select * from users;
+      <console name="Connection" type="STANDARD" schema="testx" session="Main"><![CDATA[select * from users;
 show tables;
+show databases;
+use testx;
+CREATE TABLE `testx`.`users36` (`id` BIGINT NOT NULL AUTO_INCREMENT,`name` VARCHAR(45) NULL,`lastName` VARCHAR(45) NULL,
+                    `age` TINYINT NULL,
+                    PRIMARY KEY `id`
 statement.execute("insert into `test`.`users` (id, name, lastName, age) values (5, 'ty', 'fg', 56);");
 CREATE TABLE `test`.`users` (`id` INT NOT NULL, `name` VARCHAR(45) NOT NULL, `lastName` VARCHAR(45) NOT NULL, `age` TINYINT(3) NOT NULL);
        PRIMARY KEY (`id`),
        UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE);
-CREATE TABLE `test`.`table3` (`id` INT NOT NULL AUTO_INCREMENT,  `name` VARCHAR(45) NULL,  `lastName` VARCHAR(45) NULL,  `age` VARCHAR(45) NOT NULL,  PRIMARY KEY (`id`));]]></console>
+CREATE TABLE `test`.`table3` (`id` INT NOT NULL AUTO_INCREMENT,  `name` VARCHAR(45) NULL,  `lastName` VARCHAR(45) NULL,  `age` VARCHAR(45) NOT NULL,  PRIMARY KEY (`id`));
+
+use testx;
+CREATE TABLE `testx`.`table2` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `lastName` VARCHAR(45) NULL,
+  `age` BIGINT(3) NULL,
+  PRIMARY KEY (`id`));]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -48,6 +62,7 @@ CREATE TABLE `test`.`table3` (`id` INT NOT NULL AUTO_INCREMENT,  `name` VARCHAR(
     <connection id="c647cfb6-33b1-4426-9c5e-2204ec3f419f" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="c647cfb6-33b1-4426-9c5e-2204ec3f419f" dataset="testx.table2" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="c647cfb6-33b1-4426-9c5e-2204ec3f419f" dataset="test.users" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
@@ -55,6 +70,10 @@ CREATE TABLE `test`.`table3` (`id` INT NOT NULL AUTO_INCREMENT,  `name` VARCHAR(
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
+  </component>
+  <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/conn.sql" connection-id="c647cfb6-33b1-4426-9c5e-2204ec3f419f" session-id="MAIN" current-schema="testx" />
+    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/prob.sql" connection-id="c647cfb6-33b1-4426-9c5e-2204ec3f419f" session-id="MAIN" current-schema="testx" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
@@ -72,7 +91,9 @@ CREATE TABLE `test`.`table3` (`id` INT NOT NULL AUTO_INCREMENT,  `name` VARCHAR(
     <filters />
   </component>
   <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
-    <recently-used-interfaces />
+    <recently-used-interfaces>
+      <mapping database-type="MYSQL" interface-id="DEFAULT" />
+    </recently-used-interfaces>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
@@ -89,13 +110,13 @@ CREATE TABLE `test`.`table3` (`id` INT NOT NULL AUTO_INCREMENT,  `name` VARCHAR(
           <url-type value="DATABASE" />
           <host value="localhost" />
           <port value="3306" />
-          <database value="test" />
+          <database value="testx" />
           <type value="USER_PASSWORD" />
-          <user value="evgen" />
-          <deprecated-pwd value="bGlubGluZTAxMg==" />
+          <user value="root" />
+          <deprecated-pwd value="bGlubGluZTAxMQ==" />
         </database>
         <properties>
-          <auto-commit value="false" />
+          <auto-commit value="true" />
         </properties>
         <ssh-settings>
           <active value="false" />
@@ -164,7 +185,7 @@ CREATE TABLE `test`.`table3` (`id` INT NOT NULL AUTO_INCREMENT,  `name` VARCHAR(
     <browser-settings>
       <general>
         <display-mode value="TABBED" />
-        <navigation-history-size value="100" />
+        <navigation-history-size value="50" />
         <show-object-details value="false" />
       </general>
       <filters>

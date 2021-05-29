@@ -1,56 +1,44 @@
 package jm.task.core.jdbc;
-
+import java.sql.Statement;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 //import jm.task.core.jdbc.util.Util;
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
-    private static final String URL = "jdbc:mysql://localhost:3306/test?useSSL=false";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "linline011";
 
-    private static Statement statement;
+    //private static Util connect;
+    //private static Statement statement;
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-//        Connection connection = null;
-//
-////        try {
-//            //Util connection = new Util();
-//        try {
-//            Driver driver = new com.mysql.cj.jdbc.Driver();
-//            DriverManager.registerDriver(driver);
-//            //connection = connection.getConnection();
-//            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-//            //connection.close();
-//            if (!connection.isClosed()) {
-//                System.out.println("Соединение с БД установлено." );
-//            }
-//        } catch (Exception e ){ }
+        //Connection connection;
 
-//        statement = connection.createStatement();
-//        statement.addBatch("CREATE TABLE `test`.`users125` (\n" +
-//                "  `id` BIGINT NOT NULL AUTO_INCREMENT,\n" +
-//                "  `name` VARCHAR(45) NULL,\n" +
-//                "  `lastName` VARCHAR(45) NULL,\n" +
-//                "  `age` TINYINT NULL,\n" +
-//                "  PRIMARY KEY (`id`));");
-//        statement.executeBatch();
+        Util connect = new Util();
+        connect.connectUtil();
+        UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
+        userDaoJDBC.getAllUsers();
 
-
-
-            Util.getConnection();
-            UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
-            userDaoJDBC.createUsersTable();
-
-            //userDaoJDBC.saveUser("gasdg", "dgdfg", (byte) 56);
-            //userDaoJDBC.dropUsersTable();
-            //userDaoJDBC.createUsersTable();
-//        } catch (Exception e) {
-//            e.printStackTrace();
 //        }
-        //conn.UtilConnect();
-        //userDaoJDBC.saveUser("Midfa", "Likes", (byte) 45);
+        //UserDaoJDBCImpl userDaoJDBC = new UserDaoJDBCImpl();
+        //UserDaoJDBCImpl.dropUsersTable();
+        //userDaoJDBC.createUsersTable();
+        //UserDaoJDBCImpl.saveUser("Mike", "Fok", (byte) 25);
+//        userDaoJDBC.saveUser("Rob", "Will", (byte) 45);
+//        userDaoJDBC.saveUser("Nik", "Cave", (byte) 56);
+//        userDaoJDBC.saveUser("Pole", "Alen", (byte) 65);
+        //userDaoJDBC.getAllUsers();
+
+
+
+
+
+
+
 
     }
+
 }
